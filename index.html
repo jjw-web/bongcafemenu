@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Thẻ này cấm trình duyệt (Cốc Cốc, Chrome) ép màu Dark Mode -->
+  <meta name="color-scheme" content="light only">
   <title>Bống Cà Phê • Full Bilingual Menu</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap');
     
-    /* Ép màu nền chuẩn để không bị lỗi khi dùng Dark Mode của trình duyệt */
     body { 
       font-family: 'Lexend', sans-serif; 
       background-color: #f9f5eb !important; 
       color: #3f2a1e !important; 
-      transition: all 0.3s ease; 
     }
     
     .hero-bg {
@@ -48,14 +48,12 @@
 
   <!-- Floating Buttons Container -->
   <div class="fixed bottom-6 right-6 z-[100] flex items-center gap-3">
-    <!-- Language Toggle Button -->
     <button onclick="toggleLang()" class="bg-[#d97706] text-white p-3 rounded-full border-2 border-white shadow-2xl flex items-center justify-center hover:scale-110 transition-all" title="Switch Language">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5a18.022 18.022 0 01-3.827-5.806m10.099 5.806c-1.074-4.469-3.218-8.187-5.878-10.312M8 12.5a18.649 18.649 0 01-5.468-2.108M15 21l4-10 4 10m-7.1-2h6.2" />
       </svg>
     </button>
     
-    <!-- Scroll to Top Button -->
     <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="bg-white text-[#d97706] p-3 rounded-full border-2 border-[#d97706] shadow-2xl flex items-center justify-center hover:scale-110 transition-all" title="Scroll to Top">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -73,12 +71,14 @@
     </div>
   </div>
 
-  <!-- Sticky Nav - ĐÃ FIX CĂN GIỮA TRÊN PC -->
-  <div class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#e6d9c2] shadow-sm">
-    <div id="quick-nav" class="flex overflow-x-auto gap-3 px-4 py-4 md:justify-center max-w-7xl mx-auto w-full"></div>
+  <!-- Sticky Nav - ĐÃ FIX CHỐNG CẮT NÚT VÀ CĂN LỀ CHUẨN -->
+  <div class="sticky top-0 z-50 bg-[#f9f5eb]/95 backdrop-blur-md border-b border-[#e6d9c2] shadow-sm">
+    <div class="max-w-5xl mx-auto">
+      <div id="quick-nav" class="flex overflow-x-auto gap-3 px-4 py-4 w-full scroll-smooth items-center"></div>
+    </div>
   </div>
 
-  <!-- Main Menu - ĐÃ FIX THU GỌN LẠI TRÊN PC CHO ĐẸP -->
+  <!-- Main Menu -->
   <div id="menu-root" class="max-w-5xl mx-auto px-4 py-12 md:py-16"></div>
 
   <!-- Footer -->
