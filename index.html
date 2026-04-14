@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Thẻ này cấm trình duyệt (Cốc Cốc, Chrome) ép màu Dark Mode -->
   <meta name="color-scheme" content="light only">
   <title>Bống Cà Phê • Full Bilingual Menu</title>
+  
+  <!-- Tối ưu Render-blocking: Load Font song song -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap');
-    
     body { 
       font-family: 'Lexend', sans-serif; 
       background-color: #f9f5eb !important; 
@@ -21,14 +24,15 @@
                   url('https://images.unsplash.com/photo-1501339817302-ee4b93101f7a?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat fixed;
     }
     
+    /* Chỉnh lại hover mượt hơn, bỏ translate */
     .menu-card { 
-      transition: all 0.3s ease; 
+      transition: all 0.2s ease-in-out; 
       border: 1px solid rgba(212, 185, 159, 0.3); 
       background-color: #ffffff !important;
     }
     
     .nav-pill { 
-      transition: all 0.3s ease; 
+      transition: all 0.2s ease-in-out; 
       white-space: nowrap; 
       flex-shrink: 0; 
       color: #3f2a1e;
@@ -48,13 +52,12 @@
 
   <!-- Floating Buttons Container -->
   <div class="fixed bottom-6 right-6 z-[100] flex items-center gap-3">
-    <button onclick="toggleLang()" class="bg-[#d97706] text-white p-3 rounded-full border-2 border-white shadow-2xl flex items-center justify-center hover:scale-110 transition-all" title="Switch Language">
+    <button onclick="toggleLang()" class="bg-[#d97706] text-white p-3 rounded-full border-2 border-white shadow-2xl flex items-center justify-center hover:scale-110 transition-transform" title="Switch Language">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5a18.022 18.022 0 01-3.827-5.806m10.099 5.806c-1.074-4.469-3.218-8.187-5.878-10.312M8 12.5a18.649 18.649 0 01-5.468-2.108M15 21l4-10 4 10m-7.1-2h6.2" />
       </svg>
     </button>
-    
-    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="bg-white text-[#d97706] p-3 rounded-full border-2 border-[#d97706] shadow-2xl flex items-center justify-center hover:scale-110 transition-all" title="Scroll to Top">
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="bg-white text-[#d97706] p-3 rounded-full border-2 border-[#d97706] shadow-2xl flex items-center justify-center hover:scale-110 transition-transform" title="Scroll to Top">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
       </svg>
@@ -67,19 +70,19 @@
       <div id="hero-sub" class="uppercase tracking-[4px] text-xs font-light mb-4 opacity-80 text-orange-200">HÀ NỘI • SINCE 2004</div>
       <h1 class="text-5xl md:text-7xl font-light mb-6">Bống Cà Phê</h1>
       <p id="hero-desc" class="text-lg md:text-xl font-light max-w-md mx-auto opacity-95 leading-relaxed italic">The meeting place of smiles.</p>
-      <a id="hero-btn" href="#menu-root" class="mt-10 inline-block bg-[#d97706] px-10 py-4 rounded-full font-medium shadow-lg hover:scale-105 transition-all uppercase tracking-widest text-sm text-white">VIEW MENU</a>
+      <a id="hero-btn" href="#menu-root" class="mt-10 inline-block bg-[#d97706] px-10 py-4 rounded-full font-medium shadow-lg hover:scale-105 transition-transform uppercase tracking-widest text-sm text-white">VIEW MENU</a>
     </div>
   </div>
 
-  <!-- Sticky Nav - ĐÃ FIX CHỐNG CẮT NÚT VÀ CĂN LỀ CHUẨN -->
+  <!-- Sticky Nav -->
   <div class="sticky top-0 z-50 bg-[#f9f5eb]/95 backdrop-blur-md border-b border-[#e6d9c2] shadow-sm">
     <div class="max-w-5xl mx-auto">
       <div id="quick-nav" class="flex overflow-x-auto gap-3 px-4 py-4 w-full scroll-smooth items-center"></div>
     </div>
   </div>
 
-  <!-- Main Menu -->
-  <div id="menu-root" class="max-w-5xl mx-auto px-4 py-12 md:py-16"></div>
+  <!-- Main Menu - Thêm scroll-mt-24 để fix lỗi neo bị che -->
+  <div id="menu-root" class="max-w-5xl mx-auto px-4 py-12 md:py-16 scroll-mt-24"></div>
 
   <!-- Footer -->
   <footer class="bg-[#2a1d14] text-[#d4b99f] py-12 text-center px-6">
@@ -173,6 +176,7 @@
     ];
 
     let isBilingual = true;
+    let observer = null; // Khởi tạo biến observer toàn cục
 
     function toggleLang() {
       isBilingual = !isBilingual;
@@ -210,7 +214,8 @@
           </h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
             ${sec.items.map(item => `
-              <div class="menu-card p-5 rounded-2xl flex justify-between items-center shadow-sm hover:shadow-md hover:-translate-y-1">
+              <!-- Sửa lại Hover Effect ở đây: bỏ translate, thêm đổi viền và nền nhẹ nhàng -->
+              <div class="menu-card p-5 rounded-2xl flex justify-between items-center shadow-sm hover:border-[#d97706]/40 hover:bg-[#fffcf8]">
                 <div class="flex flex-col pr-3">
                     <span class="font-semibold text-gray-800 text-[15px] md:text-base leading-tight">
                         ${isBilingual ? item.en : item.vi}
@@ -230,31 +235,48 @@
           <p>⏰ ${isBilingual ? '07:00 AM - 11:00 PM (07:00 - 23:00)' : '07:00 - 23:00'}</p>
           <p>📞 Hotline: 0933 556 650</p>`;
 
-      initScrollSpy();
+      // Gọi lại Intersection Observer sau khi DOM mới được vẽ
+      initIntersectionObserver();
     }
 
-    function initScrollSpy() {
+    function initIntersectionObserver() {
+      // Xóa bỏ listener cũ nếu người dùng vừa bấm đổi ngôn ngữ (chống leak memory)
+      if (observer) {
+        observer.disconnect();
+      }
+
       const pills = document.querySelectorAll('.nav-pill');
       const sections = document.querySelectorAll('.section-group');
       
-      window.addEventListener('scroll', () => {
-        let current = "";
-        sections.forEach(section => {
-          if (window.scrollY >= (section.offsetTop - 200)) {
-            current = section.getAttribute('id');
+      // Sử dụng API IntersectionObserver hiện đại
+      const options = {
+        root: null,
+        // Căn lề trên -80px để bù trừ cho thanh Sticky Nav
+        rootMargin: "-80px 0px -70% 0px",
+        threshold: 0
+      };
+
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const currentId = entry.target.getAttribute('id');
+            pills.forEach(pill => {
+              pill.classList.remove('active');
+              if (pill.getAttribute('href') === `#${currentId}`) {
+                pill.classList.add('active');
+                pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+              }
+            });
           }
         });
-        
-        pills.forEach(pill => {
-          pill.classList.remove('active');
-          if (pill.getAttribute('href') === `#${current}`) {
-            pill.classList.add('active');
-            pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-          }
-        });
+      }, options);
+
+      sections.forEach(section => {
+        observer.observe(section);
       });
     }
 
+    // Khởi chạy lần đầu
     renderUI();
   </script>
 
