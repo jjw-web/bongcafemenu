@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bống Cà Phê • Full Bilingual Menu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap');
+    
+    body { 
+      font-family: 'Lexend', sans-serif; 
+      background-color: #f9f5eb; 
+      color: #3f2a1e; 
+      transition: all 0.3s ease; 
+    }
+    
+    .hero-bg {
+      background: linear-gradient(rgba(28, 20, 15, 0.75), rgba(28, 20, 15, 0.82)),
+                  url('https://images.unsplash.com/photo-1501339817302-ee4b93101f7a?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat fixed;
+    }
+    
+    .menu-card { 
+      transition: all 0.3s ease; 
+      border: 1px solid rgba(212, 185, 159, 0.3); 
+    }
+    
+    .nav-pill { 
+      transition: all 0.3s ease; 
+      white-space: nowrap; 
+      flex-shrink: 0; 
+    }
+    
+    .nav-pill.active { 
+      background-color: #d97706; 
+      color: white !important; 
+      border-color: #d97706; 
+    }
+    
+    #quick-nav::-webkit-scrollbar { 
+      display: none; 
+    }
+    
+    #quick-nav { 
+      -ms-overflow-style: none; 
+      scrollbar-width: none; 
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Buttons Container -->
+  <div class="fixed bottom-6 right-6 z-[100] flex items-center gap-3">
+    <!-- Language Toggle Button -->
+    <button onclick="toggleLang()" class="bg-[#d97706] text-white p-3 rounded-full border-2 border-white shadow-2xl flex items-center justify-center hover:scale-110 transition-all" title="Switch Language">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5a18.022 18.022 0 01-3.827-5.806m10.099 5.806c-1.074-4.469-3.218-8.187-5.878-10.312M8 12.5a18.649 18.649 0 01-5.468-2.108M15 21l4-10 4 10m-7.1-2h6.2" />
+      </svg>
+    </button>
+    
+    <!-- Scroll to Top Button -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="bg-white text-[#d97706] p-3 rounded-full border-2 border-[#d97706] shadow-2xl flex items-center justify-center hover:scale-110 transition-all" title="Scroll to Top">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero-bg h-[65vh] flex items-center justify-center text-white text-center px-6">
+    <div>
+      <div id="hero-sub" class="uppercase tracking-[4px] text-xs font-light mb-4 opacity-80 text-orange-200">HÀ NỘI • SINCE 2004</div>
+      <h1 class="text-5xl md:text-7xl font-light mb-6">Bống Cà Phê</h1>
+      <p id="hero-desc" class="text-lg md:text-xl font-light max-w-md mx-auto opacity-95 leading-relaxed italic">The meeting place of smiles.</p>
+      <a id="hero-btn" href="#menu-root" class="mt-10 inline-block bg-[#d97706] px-10 py-4 rounded-full font-medium shadow-lg hover:scale-105 transition-all uppercase tracking-widest text-sm">VIEW MENU</a>
+    </div>
+  </div>
+
+  <!-- Sticky Nav -->
+  <div class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#e6d9c2]">
+    <div id="quick-nav" class="flex overflow-x-auto gap-2 px-4 py-4"></div>
+  </div>
+
+  <!-- Main Menu -->
+  <div id="menu-root" class="max-w-6xl mx-auto px-4 py-12"></div>
+
+  <!-- Footer -->
+  <footer class="bg-[#2a1d14] text-[#d4b99f] py-12 text-center px-6">
+    <div class="text-2xl font-light tracking-[4px] mb-4 uppercase">BỐNG CÀ PHÊ</div>
+    <div id="footer-info" class="text-sm opacity-60 space-y-2 leading-loose"></div>
+    <div class="mt-8 pt-8 border-t border-white/10 text-[10px] opacity-40 uppercase tracking-widest text-center">
+      © 2026 BỐNG COFFEE. ALL RIGHTS RESERVED.
+    </div>
+  </footer>
+
+  <script>
+    const menuData = [
+      {
+        id: "ca-phe", icon: "☕",
+        title_en: "COFFEE", title_vi: "CÀ PHÊ",
+        items: [
+          { en: "Brown Coffee", vi: "Nâu", price: "35k" },
+          { en: "Black Coffee", vi: "Đen", price: "30k" },
+          { en: "White Coffee", vi: "Bạc sỉu", price: "40k" },
+          { en: "Coconut Milk Coffee", vi: "Cafe cốt dừa", price: "45k" },
+          { en: "Salted Cream Coffee", vi: "Cafe muối", price: "40k" },
+          { en: "Rich Creamy Coffee", vi: "Cafe kem ngậy", price: "45k" },
+          { en: "Salted Caramel Coffee", vi: "Cafe caramel muối", price: "45k" },
+          { en: "Espresso", vi: "Espresso", price: "35k" },
+          { en: "Latte", vi: "Latte", price: "45k" },
+          { en: "Cappucino", vi: "Cappucino", price: "45k" },
+          { en: "Americano", vi: "Americano", price: "35k" }
+        ]
+      },
+      {
+        id: "tra", icon: "🍵",
+        title_en: "TEA SELECTIONS", title_vi: "CÁC LOẠI TRÀ",
+        items: [
+          { en: "Oolong w. Salty Cream", vi: "Trà ô long kem mặn", price: "45k" },
+          { en: "Jasmine w. Salty Cream", vi: "Trà nhài kem mặn", price: "45k" },
+          { en: "Jasmine Pineapple Tea", vi: "Trà lài đác dứa", price: "40k" },
+          { en: "Soursop Tea", vi: "Trà mãng cầu", price: "40k" },
+          { en: "Mango Passion Tea", vi: "Trà xoài chanh leo", price: "40k" },
+          { en: "Peach Passion Tea", vi: "Trà đào chanh leo", price: "40k" },
+          { en: "Mulberry Tea (Seasonal)", vi: "Trà dâu tằm (theo mùa)", price: "40k" },
+          { en: "Peach Orange Lemongrass", vi: "Trà đào cam sả", price: "40k" },
+          { en: "Hot Orange Cinnamon", vi: "Trà cam quế (nóng)", price: "40k" },
+          { en: "Hot Chamomile Tea", vi: "Trà hoa cúc (nóng)", price: "35k" },
+          { en: "Hot Rose Tea", vi: "Trà hoa hồng (nóng)", price: "35k" },
+          { en: "Hot Ginger Tea", vi: "Trà gừng (nóng)", price: "30k" },
+          { en: "Lipton Tea", vi: "Trà lipton", price: "30k" },
+          { en: "Dilmah Strawberry Tea", vi: "Trà dilmah dâu", price: "30k" },
+          { en: "Dilmah Peach Tea", vi: "Trà dilmah đào", price: "30k" },
+          { en: "Dilmah Mint Tea", vi: "Trà dilmah bạc hà", price: "30k" }
+        ]
+      },
+      {
+        id: "sua-chua-deo", icon: "🥛",
+        title_en: "FROZEN SOFT YOGURT", title_vi: "SỮA CHUA DẺO",
+        items: [
+          { en: "Mixed Fruit Yogurt", vi: "SC dẻo hoa quả", price: "45k" },
+          { en: "Avocado Yogurt", vi: "SC dẻo bơ", price: "45k" },
+          { en: "Mango Yogurt", vi: "SC dẻo xoài", price: "45k" },
+          { en: "Strawberry Yogurt", vi: "SC dẻo dâu", price: "45k" },
+          { en: "Soursop Yogurt", vi: "SC dẻo mãng cầu", price: "45k" },
+          { en: "Strawberry & Mango Yogurt", vi: "SC dẻo dâu xoài", price: "45k" },
+          { en: "Avocado & Mango Yogurt", vi: "SC dẻo bơ xoài", price: "45k" },
+          { en: "Avocado & Strawberry Yogurt", vi: "SC dẻo bơ dâu", price: "45k" },
+          { en: "Jackfruit Yogurt", vi: "SC dẻo mít", price: "40k" },
+          { en: "Cocoa Yogurt", vi: "SC dẻo cacao", price: "40k" },
+          { en: "Blueberry Yogurt", vi: "SC dẻo việt quất", price: "40k" },
+          { en: "Passion Fruit Yogurt", vi: "SC dẻo chanh leo", price: "40k" },
+          { en: "Tapioca Pearls Yogurt", vi: "SC dẻo trân châu", price: "40k" },
+          { en: "Matcha Yogurt", vi: "SC dẻo matcha", price: "40k" },
+          { en: "Aloe Vera Yogurt", vi: "SC dẻo nha đam", price: "40k" }
+        ]
+      },
+      {
+        id: "hoa-qua-dam", icon: "🍓",
+        title_en: "FRUIT PARFAIT", title_vi: "HOA QUẢ DẦM",
+        items: [
+          { en: "Fruit Parfait w. Yogurt", vi: "Hoa quả dầm sữa chua", price: "45k" },
+          { en: "Avocado Parfait", vi: "Bơ dầm sữa chua", price: "45k" },
+          { en: "Mango Parfait", vi: "Xoài dầm sữa chua", price: "45k" },
+          { en: "Soursop Parfait", vi: "Mãng cầu dầm SC", price: "45k" },
+          { en: "Strawberry Parfait", vi: "Dâu dầm sữa chua", price: "45k" },
+          { en: "Avocado & Soursop Parfait", vi: "Bơ mãng cầu dầm SC", price: "45k" },
+          { en: "Avocado & Strawberry Parfait", vi: "Bơ dâu dầm SC", price: "45k" },
+          { en: "Avocado & Mango Parfait", vi: "Bơ xoài dầm SC", price: "45k" },
+          { en: "Strawberry & Mango Parfait", vi: "Dâu xoài dầm SC", price: "45k" },
+          { en: "Jackfruit Parfait", vi: "Mít dầm sữa chua", price: "40k" }
+        ]
+      },
+      {
+        id: "nuoc-ep", icon: "🥤",
+        title_en: "FRESH JUICE", title_vi: "NƯỚC ÉP TƯƠI",
+        items: [
+          { en: "Pomelo Juice", vi: "Ép Bưởi", price: "45k" },
+          { en: "Guava Juice", vi: "Ép Ổi", price: "40k" },
+          { en: "Ambarella Juice", vi: "Ép Cóc", price: "40k" },
+          { en: "Pomegranate Juice", vi: "Ép Lựu", price: "45k" },
+          { en: "Water Apple Juice", vi: "Ép Roi", price: "45k" },
+          { en: "Apple Juice", vi: "Ép Táo", price: "40k" },
+          { en: "Watermelon Juice", vi: "Ép Dưa hấu", price: "40k" },
+          { en: "Melon Juice", vi: "Ép Dưa vàng", price: "40k" },
+          { en: "Pineapple Juice", vi: "Ép Dứa", price: "40k" },
+          { en: "Carrot Juice", vi: "Ép Cà rốt", price: "40k" },
+          { en: "Orange Juice", vi: "Ép Cam", price: "40k" },
+          { en: "Tangerine Juice", vi: "Ép Quýt", price: "40k" },
+          { en: "Passion Fruit Juice", vi: "Ép Chanh leo", price: "40k" },
+          { en: "Fresh Limeade", vi: "Chanh tươi", price: "30k" }
+        ]
+      },
+      {
+        id: "sinh-to", icon: "🍹",
+        title_en: "SMOOTHIES", title_vi: "SINH TỐ",
+        items: [
+          { en: "Avocado Smoothie", vi: "Sinh tố Bơ", price: "45k" },
+          { en: "Avocado Ice Cream", vi: "Kem bơ", price: "45k" },
+          { en: "Avocado w. Salty Cream", vi: "Bơ kem mặn", price: "45k" },
+          { en: "Avocado & Soursop", vi: "Bơ mãng cầu", price: "45k" },
+          { en: "Avocado & Mango", vi: "Bơ xoài", price: "45k" },
+          { en: "Avocado & Banana", vi: "Bơ chuối", price: "45k" },
+          { en: "Mango Smoothie", vi: "Sinh tố Xoài", price: "45k" },
+          { en: "Mango Ice Cream", vi: "Kem xoài", price: "45k" },
+          { en: "Mango & Soursop", vi: "Xoài mãng cầu", price: "45k" },
+          { en: "Soursop Smoothie", vi: "Sinh tố Mãng cầu", price: "45k" },
+          { en: "Watermelon Smoothie", vi: "Sinh tố Dưa hấu", price: "45k" },
+          { en: "Banana Smoothie", vi: "Sinh tố Chuối", price: "40k" },
+          { en: "Banana Yogurt Smoothie", vi: "Chuối sữa chua", price: "40k" },
+          { en: "Passion Fruit Smoothie", vi: "Sinh tố Chanh leo", price: "40k" },
+          { en: "Passion Fruit Frappe", vi: "Chanh leo tuyết", price: "45k" },
+          { en: "Lime Frappe", vi: "Chanh tuyết", price: "40k" }
+        ]
+      },
+      {
+        id: "topping", icon: "🌰",
+        title_en: "TOPPINGS", title_vi: "TOPPING",
+        items: [
+          { en: "White Tapioca Pearls", vi: "Trân châu trắng", price: "5k" },
+          { en: "Aloe Vera", vi: "Nha đam", price: "5k" },
+          { en: "Areca Palm Seeds", vi: "Hạt đác", price: "10k" },
+          { en: "Water Chestnut Popping", vi: "Hạt nổ củ năng", price: "5k" },
+          { en: "Dried Coconut", vi: "Dừa sấy", price: "5k" },
+          { en: "Rich Cream", vi: "Kem ngậy", price: "10k" }
+        ]
+      }
+    ];
+
+    let isBilingual = true;
+
+    // Toggle between Bilingual and Vietnamese only
+    function toggleLang() {
+      isBilingual = !isBilingual;
+      renderUI();
+    }
+
+    // Render the entire DOM based on the selected language state
+    function renderUI() {
+      const heroBtn = document.getElementById('hero-btn');
+      const heroDesc = document.getElementById('hero-desc');
+      const heroSub = document.getElementById('hero-sub');
+
+      if (isBilingual) {
+        heroSub.innerText = 'HANOI • EST 2004';
+        heroDesc.innerHTML = 'The meeting place of smiles.<br><span class="text-sm not-italic opacity-80 font-light italic">Điểm hẹn của những nụ cười.</span>';
+        heroBtn.innerText = 'VIEW MENU';
+      } else {
+        heroSub.innerText = 'HÀ NỘI • SINCE 2004';
+        heroDesc.innerText = 'Điểm hẹn của những nụ cười.';
+        heroBtn.innerText = 'XEM THỰC ĐƠN';
+      }
+
+      // Render Navigation
+      const navContainer = document.getElementById('quick-nav');
+      navContainer.innerHTML = menuData.map((sec, idx) => `
+        <a href="#${sec.id}" class="nav-pill px-5 py-2 rounded-full border border-[#d4b99f] text-sm ${idx === 0 ? 'active' : ''}">
+          ${isBilingual ? `${sec.title_en} <span class="text-[10px] opacity-60">(${sec.title_vi})</span>` : sec.title_vi}
+        </a>
+      `).join('');
+
+      // Render Menu Items
+      const menuRoot = document.getElementById('menu-root');
+      menuRoot.innerHTML = menuData.map(sec => `
+        <section id="${sec.id}" class="mb-16 scroll-mt-24 section-group">
+          <h3 class="text-2xl font-semibold mb-8 flex items-center gap-3 uppercase tracking-wide">
+            <span class="w-8 h-[2px] bg-[#d97706]"></span>
+            ${sec.icon} ${isBilingual ? `${sec.title_en} <span class="text-sm font-light text-gray-400 italic">/ ${sec.title_vi}</span>` : sec.title_vi}
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            ${sec.items.map(item => `
+              <div class="menu-card bg-white p-5 rounded-2xl flex justify-between items-center shadow-sm">
+                <div class="flex flex-col pr-2">
+                    <span class="font-medium text-gray-800 leading-tight">
+                        ${isBilingual ? item.en : item.vi}
+                    </span>
+                    ${isBilingual ? `<span class="text-[11px] text-[#d97706] italic font-light mt-0.5 leading-tight">${item.vi}</span>` : ''}
+                </div>
+                <span class="text-[#d97706] font-bold text-lg whitespace-nowrap">${item.price}</span>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      `).join('');
+
+      // Render Footer info
+      const footerInfo = document.getElementById('footer-info');
+      footerInfo.innerHTML = `
+          <p>📍 ${isBilingual ? 'Hanoi (Hà Nội)' : 'Hà Nội'}</p>
+          <p>⏰ ${isBilingual ? '07:00 AM - 11:00 PM (07:00 - 23:00)' : '07:00 - 23:00'}</p>
+          <p>📞 Hotline: 0933 556 650</p>
+      `;
+
+      // Re-initialize ScrollSpy after rendering
+      initScrollSpy();
+    }
+
+    // ScrollSpy Logic for Sticky Navigation
+    function initScrollSpy() {
+      const pills = document.querySelectorAll('.nav-pill');
+      const sections = document.querySelectorAll('.section-group');
+      
+      window.addEventListener('scroll', () => {
+        let current = "";
+        sections.forEach(section => {
+          if (window.scrollY >= (section.offsetTop - 180)) {
+            current = section.getAttribute('id');
+          }
+        });
+        
+        pills.forEach(pill => {
+          pill.classList.remove('active');
+          if (pill.getAttribute('href') === `#${current}`) {
+            pill.classList.add('active');
+            // Scroll the active pill into view horizontally
+            pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          }
+        });
+      });
+    }
+
+    // Initial render call on page load
+    renderUI();
+  </script>
+
+</body>
+</html>
