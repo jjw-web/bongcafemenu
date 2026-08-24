@@ -300,40 +300,53 @@
             .replace(/Đ/g, 'D');
     }
 
+    function normalizeSearchText(str) {
+      return removeDiacritics(str.toLowerCase())
+            .replace(/\bsc\b/g, 'sua chua')
+            .replace(/\bdam sc\b/g, 'dam sua chua');
+    }
+
+    function itemMatchesSearch(item, query) {
+      const haystack = normalizeSearchText(`${item.en} ${item.vi}`);
+      const tokens = normalizeSearchText(query).split(/\s+/).filter(Boolean);
+      return tokens.every(token => haystack.includes(token));
+    }
+
     function handleSearch(e) {
-      const rawQuery = e.target.value.toLowerCase();
-      searchQuery = removeDiacritics(rawQuery).toLowerCase();
+      searchQuery = e.target.value.trim();
       renderMenuCards();
-      
-      const firstSection = document.querySelector('.section-group');
-      if (firstSection) {
-        const offset = firstSection.getBoundingClientRect().top + window.scrollY - 120;
-        window.scrollTo({ top: offset, behavior: 'smooth' });
-      }
+
+      if (!searchQuery) return;
+
+      requestAnimationFrame(() => {
+        const firstSection = document.querySelector('.section-group');
+        if (firstSection) {
+          const offset = firstSection.getBoundingClientRect().top + window.scrollY - 120;
+          window.scrollTo({ top: offset, behavior: 'smooth' });
+        }
+      });
     }
 
     function renderMenuCards() {
       const menuRoot = document.getElementById('menu-root');
       const currentLang = isBilingual ? 'en' : 'vi';
+      const isSearching = Boolean(searchQuery);
+      const visibleClass = isSearching ? ' visible' : '';
       
-      menuRoot.innerHTML = menuData.map(sec => {
+      const sectionsHtml = menuData.map(sec => {
         const colors = sectionColors[sec.id];
         const isToppingSection = sec.id === 'topping';
         
         let filteredItems = sec.items;
-        if (searchQuery) {
-          filteredItems = sec.items.filter(item => {
-            const enClean = removeDiacritics(item.en.toLowerCase());
-            const viClean = removeDiacritics(item.vi.toLowerCase());
-            return enClean.includes(searchQuery) || viClean.includes(searchQuery);
-          });
+        if (isSearching) {
+          filteredItems = sec.items.filter(item => itemMatchesSearch(item, searchQuery));
         }
 
         if (filteredItems.length === 0) return '';
 
         if (isToppingSection) {
           return `
-            <section id="${sec.id}" class="mb-16 scroll-mt-28 section-group" data-section="${sec.id}">
+            <section id="${sec.id}" class="mb-16 scroll-mt-28 section-group${visibleClass}" data-section="${sec.id}">
               <h3 class="text-2xl md:text-3xl font-semibold mb-6 flex items-center gap-3 uppercase tracking-wide" style="color: ${colors.text}">
                 <span class="w-10 h-[2px]" style="background-color: ${colors.accent}"></span>
                 ${sec.icon} ${isBilingual ? `${sec.title_en} <span class="text-sm md:text-base font-light text-gray-500 italic lowercase ml-2">/ ${sec.title_vi}</span>` : sec.title_vi}
@@ -351,7 +364,7 @@
         }
 
         return `
-          <section id="${sec.id}" class="mb-16 scroll-mt-28 section-group" data-section="${sec.id}">
+          <section id="${sec.id}" class="mb-16 scroll-mt-28 section-group${visibleClass}" data-section="${sec.id}">
             <h3 class="text-2xl md:text-3xl font-semibold mb-8 flex items-center gap-3 uppercase tracking-wide" style="color: ${colors.text}">
               <span class="w-10 h-[2px]" style="background-color: ${colors.accent}"></span>
               ${sec.icon} ${isBilingual ? `${sec.title_en} <span class="text-sm md:text-base font-light text-gray-500 italic lowercase ml-2">/ ${sec.title_vi}</span>` : sec.title_vi}
@@ -378,6 +391,17 @@
           </section>
         `;
       }).join('');
+
+      if (isSearching && !sectionsHtml.trim()) {
+        menuRoot.innerHTML = `
+          <div class="text-center py-20 text-gray-500">
+            <p class="text-lg font-medium">${isBilingual ? 'No items found.' : 'Không tìm thấy món.'}</p>
+            ${isBilingual ? '<p class="text-sm mt-2 italic opacity-80">Không tìm thấy món phù hợp.</p>' : ''}
+          </div>
+        `;
+      } else {
+        menuRoot.innerHTML = sectionsHtml;
+      }
 
       initIntersectionObserver();
     }
